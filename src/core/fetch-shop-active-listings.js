@@ -1,9 +1,3 @@
-/**
- * This rule is disabled in this file because we can't generate all the promises necessary to fetch
- * all listings for a given Etsy shop without iterating on the URI due to pagination.
- */
-/* eslint-disable no-await-in-loop */
-
 // This rule is disabled in this file because the Etsy API uses snake_case instead of camelCase.
 /* eslint-disable camelcase */
 
@@ -13,34 +7,54 @@ import 'dotenv/config';
 const { ETSY_API_KEY } = process.env;
 
 /**
- * An ES6 generator that retrieves all the active listings for a given Etsy shop.
+ * Removes unused information from the listings' JSON.
  *
- * @param {number} shopID - An Etsy shop ID to fetch listings for.
+ * @param {Object[]} rawListings - Unmodified listings from the Etsy API.
  *
- * @yields {Object} A single listing object.
+ * @returns {Object} An object with listing IDs as keys and listing titles as vaules.
  */
-async function* fetchShopActiveListings(shopID) {
-  let page = 1;
+export const transformListings = (rawListings) => (
+  rawListings.reduce((result, listing) => {
+    const { listing_id, title } = listing;
 
-  let url = `https://openapi.etsy.com/v2/shops/${shopID}/listings/active?api_key=${ETSY_API_KEY}&page=${page}`;
+    return {
+      ...result,
+      [listing_id]: title,
+    };
+  }, {})
+);
 
-  while (url) {
-    const response = await axios(url);
+/**
+ * Retrieves all the active listings for a given Etsy shop.
+ *
+ * @param {number} shopID
+ * @param {number} [page = 1] - Used for recursively requesting additional listings if the given
+ * shop has more listings than the limit (set to 100).
+ * @param {Object[]} [initialListings = []] - Used for passing the prior iteration's listings
+ * to the next iteration if recursion is required to retrieve all listings for a given shop.
+ *
+ * @returns {Object} An object containing an array of all a shop's listings and the shop's ID.
+ */
+const fetchShopActiveListings = async (shopID, page = 1, initialListings = []) => {
+  try {
+    const newListings = await axios.get(
+      'https://openapi.etsy.com/v2/' // base URI
+      + `shops/${shopID}/listings/active` // resource route
+      + `?page=${page}&api_key=${ETSY_API_KEY}`, // params
+    );
 
-    const listings = await response.data.results;
+    const { pagination, results } = newListings.data;
 
-    const { next_page } = await response.data.pagination;
+    const accumulatedListings = [...initialListings, ...results];
 
-    for (const listing of listings) {
-      yield { listing_id: listing.listing_id, title: listing.title };
+    if (pagination.next_page) {
+      return fetchShopActiveListings(shopID, pagination.next_page, accumulatedListings);
     }
 
-    if (next_page) {
-      page = next_page;
-    } else {
-      url = null;
-    }
+    return { listings: transformListings(accumulatedListings), shopID };
+  } catch (err) {
+    return console.log(err);
   }
-}
+};
 
 export default fetchShopActiveListings;
