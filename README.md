@@ -1,3 +1,5 @@
+[![adilasif](https://circleci.com/gh/adilasif/ct-backend-engineer-exercise.svg?style=shield&circle-token=a23a70b5d76f2d21f9e973c7e3a3750d9dcbf6f8)](https://github.com/adilasif/ct-backend-engineer-exercise)
+
 <h1 align=center>CT Backend Engineer Exercise</h1>
 
 <p align=center>
@@ -44,3 +46,17 @@ With those assumptions in mind, it is my understanding that at a high level, the
 That's all that's needed in order to run it locally. You can run it in your terminal with `npm run dev` or `yarn dev`.
 
 > 📝 This application uses `import` syntax instead of commonjs syntax, so the launch script uses babel-node. Likewise, to generate a "production" build, you will need to run the build command `npm run build` or `yarn build` in order to generate a transpiled version of the application. If you decide to build it, you will find the result in the `./dist` directory. You can then run the built application using `node ./dist/index.js`.
+
+<h2 align=center>Local Project Setup</h2>
+
+```
+/                             -- Project root. Contains the src directory and various configuration files.
+|--item-listings              -- The JSON files generated to store each Etsy shop's listings go here.
+|--src                        -- All the application code lives in here.
+  |--__tests__                -- Here there be unit tests.
+  |--core                     -- All the main business logic of the application can be found here.
+  |--index.js                 -- This is the entrypoint for the application, and where the main function is declared and called.
+```
+
+<h2 align=center>Notes</h2>
+
