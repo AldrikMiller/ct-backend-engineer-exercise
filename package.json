@@ -1,0 +1,40 @@
+{
+  "name": "ct-backend-engineer-exercise",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hire me, commercetools!",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "clean": "rm -rf ./dist ./item-listings/*",
+    "build": "babel src -d dist --ignore src/__tests__",
+    "launch": "node dist/index.js",
+    "dev": "babel-node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adilasif/ct-backend-engineer-exercise.git"
+  },
+  "author": {
+    "name": "Adil Asif",
+    "email": "adil@adilasif.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adilasif/ct-backend-engineer-exercise/issues"
+  },
+  "homepage": "https://github.com/adilasif/ct-backend-engineer-exercise#readme",
+  "dependencies": {
+    "axios": "^0.19.1",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/node": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.0"
+  }
+}
