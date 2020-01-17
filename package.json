@@ -26,6 +26,7 @@
   "homepage": "https://github.com/adilasif/ct-backend-engineer-exercise#readme",
   "dependencies": {
     "axios": "^0.19.1",
+    "deep-diff": "^1.0.2",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {
@@ -35,6 +36,8 @@
     "@babel/preset-env": "^7.7.7",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.20.0"
+    "eslint-plugin-import": "^2.20.0",
+    "jest": "^24.9.0",
+    "mock-fs": "^4.10.4"
   }
 }
