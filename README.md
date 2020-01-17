@@ -1,4 +1,4 @@
-[![adilasif](https://circleci.com/gh/adilasif/ct-backend-engineer-exercise.svg?style=shield&circle-token=a23a70b5d76f2d21f9e973c7e3a3750d9dcbf6f8)](https://github.com/adilasif/ct-backend-engineer-exercise)
+[![adilasif](https://circleci.com/gh/adilasif/ct-backend-engineer-exercise.svg?style=shield&circle-token=3e5476f961d55ca8224828fea1e76ea0dfce8bee)](https://github.com/adilasif/ct-backend-engineer-exercise)
 
 <h1 align=center>CT Backend Engineer Exercise</h1>
 
