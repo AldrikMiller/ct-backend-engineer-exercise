@@ -1,4 +1,7 @@
+import { promisify } from 'util';
 import { writeFile } from 'fs';
+
+const writeFileAsync = promisify(writeFile);
 
 /**
  * Writes a JSON representation of an Etsy shop's listings to a file named for the shop's ID.
@@ -8,10 +11,10 @@ import { writeFile } from 'fs';
  *
  * @returns {null} Not used.
  */
-const writeListingsToFile = (shopID, listings) => (
-  writeFile(`item-listings/${shopID}.json`, JSON.stringify(listings), 'utf8', (err) => {
+const writeListingsToFile = async (shopID, listings) => {
+  await writeFileAsync(`item-listings/${shopID}.json`, JSON.stringify(listings), 'utf8', (err) => {
     if (err) throw err;
-  })
-);
+  });
+};
 
 export default writeListingsToFile;
