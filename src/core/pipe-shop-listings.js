@@ -25,30 +25,28 @@ const createMessage = (shopID, message, type = 'system') => (
  * @returns {Object} A message object.
  */
 const pipeShopListings = async (shopID) => {
-  try {
-    const newListings = await fetchShopActiveListings(shopID);
-    const fileExists = await checkIfFileExists(shopID);
+  const newListings = await fetchShopActiveListings(shopID);
+  const fileExists = await checkIfFileExists(shopID);
 
-    if (fileExists) {
-      const diff = await generateDiff(shopID, newListings);
-
-      writeListingsToFile(shopID, newListings);
-
-      if (diff === 'INVALID_JSON') {
-        return createMessage(shopID, 'Data was corrupted; overwriting with the latest');
-      }
-
-      if (!diff) return createMessage(shopID, 'No changes since last sync');
-
-      return { type: 'diff', shopID, diff };
-    }
-
+  if (!fileExists) {
     writeListingsToFile(shopID, newListings);
 
     return createMessage(shopID, `First sync for shop ID ${shopID}`);
-  } catch (error) {
-    return console.log(error);
   }
+
+  const diff = await generateDiff(shopID, newListings);
+
+  writeListingsToFile(shopID, newListings);
+
+  if (diff === 'INVALID_JSON') {
+    return createMessage(shopID, 'Data was corrupted; overwriting with the latest');
+  }
+
+  if (!diff) {
+    return createMessage(shopID, 'No changes since last sync');
+  }
+
+  return { type: 'diff', shopID, diff };
 };
 
 export default pipeShopListings;
