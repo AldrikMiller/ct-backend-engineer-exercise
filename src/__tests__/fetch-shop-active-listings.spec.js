@@ -71,7 +71,7 @@ const finalResult = {
 };
 
 describe('transformListings', () => {
-  it("accepts an array of listing objects with metadata and returns a listings object with each listing's ID as a key and it's title as a property", () => {
+  it("accepts an array of listing objects with metadata and returns a listings object with each listing's ID as a key and its title as a property", () => {
     const data = transformListings([
       ...responseObject.data.results,
       ...secondResponseObject.data.results,
@@ -93,7 +93,9 @@ describe('fetchShopActiveListings', () => {
   it('fetches the listings for a given shop', async () => {
     await fetchShopActiveListings(123456);
 
-    expect(axios.get).toHaveBeenCalledWith(`https://openapi.etsy.com/v2/shops/123456/listings/active?page=1&api_key=${ETSY_API_KEY}`);
+    expect(axios.get).toHaveBeenCalledWith(
+      `https://openapi.etsy.com/v2/shops/123456/listings/active?page=1&api_key=${ETSY_API_KEY}`,
+    );
   });
 
   it('fetches listings from all API pages', async () => {
