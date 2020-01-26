@@ -1,8 +1,8 @@
-import util from 'util';
-import fs from 'fs';
+import { promisify } from 'util';
+import { readFile } from 'fs';
 import diff from 'deep-diff';
 
-const readFileAsync = util.promisify(fs.readFile);
+const readFileAsync = promisify(readFile);
 
 /**
  * Validates a string as JSON.
@@ -18,7 +18,7 @@ const validateJSON = (jsonString) => {
     /**
      * This conditional is to handle non-exception-throwing cases.
      *
-     * For example, neither JSON.parse(true) or JSON.parse(123) will throw an error, not they are
+     * For example, neither JSON.parse(true) or JSON.parse(123) will throw an error, but they are
      * not valid JSON for the purposes of our comparison. In addition, JSON.parse(null) returns
      * null, and typeof null === 'object', so we need to check for truthiness as well.
      */
