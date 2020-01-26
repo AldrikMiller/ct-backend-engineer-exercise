@@ -10,11 +10,15 @@ import outputDiffReport from './core/output-diff-report';
  * @returns {Function} Outputs the report to the console.
  */
 const generateReport = async (shopIDs) => {
-  const results = await Promise.all(
-    shopIDs.map((shopID) => pipeShopListings(shopID)),
-  );
+  try {
+    const results = await Promise.all(
+      shopIDs.map((shopID) => pipeShopListings(shopID)),
+    );
 
-  return outputDiffReport(results);
+    return outputDiffReport(results);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export default generateReport;
@@ -23,7 +27,6 @@ const testShopIDs = [
   22121623,
   22125767,
   22126053,
-  22138359,
   22136219,
   22135823,
   22137381,
